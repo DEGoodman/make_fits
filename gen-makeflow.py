@@ -17,7 +17,7 @@ def get_files():
     tsvin = csv.reader(infile, delimiter='\t')
     # ewwwwwwwwwwww way to remove header
     for row in tsvin:
-        fits_list.append(row[0])
+        fits_list.append((row[0], timeConv(row[2])))
     fits_list.pop(0)
 
     # setup DARK tsv
@@ -35,12 +35,12 @@ def write_mf(fits_list):
     # loop through SCIENCE fits
     for fit in fits_list:
         # get current SCIENCE datetime
-        time = get_datetime(fit)
+        # time = get_datetime(fit)
         # read in DARK tsv file, find nearest absolute datetimes, return n*fits filemnames 
-        dark_fits = getDarks(time)
+        dark_fits = getDarks(fit[1])
 
         # use fitsavg to get 'closest' DARKs
-        avg_dark = os.system("./fitsavg -i " + darkfits)
+        avg_dark = os.system("./fitsavg -i " + dark_fits)
 
         ''' append all modified files with '_m_'.
             write out lines to makeflow file in correct format
@@ -50,20 +50,12 @@ def write_mf(fits_list):
                     command
                 \n
         '''
-        makeflow.write("_m_" + fit + " : " + fit + " " + avg_dark)
-        makeflow.write("\t./fitsub -i " + fit + " " + avg_dark)
+        makeflow.write("_m_" + fit[0] + " : " + fit[0] + " " + avg_dark)
+        makeflow.write("\t./fitsub -i " + fit[0] + " " + avg_dark)
         makeflow.write("\n")
         # Subtract SCIENCE - DARK(avgs) (<-- fitssub)
 
     makeflow.close()
-
-def get_datetime(sci_img):
-    if tsvin:
-        for row in tsvin:
-            if row[0] = sci_img:
-                # return datetime
-                return timeConv(row[3])
-    return datetime.now()
 
 # thanks Ryan Jicha!
 def timeConv(time):
@@ -75,7 +67,7 @@ def getDarks(time):
     temp_list = [(None,datetime.now()) for i in range(4)]
     # compare times
     for row in tsvdark:
-        if math.fabs(timeConv(row[3])-time) < math.fabs(temp_list[0]-time):
+        if math.fabs(timeConv(row[2])-time) < math.fabs(temp_list[0]-time):
             temp_list[3] = temp_list[2]
             temp_list[2] = temp_list[1]
             temp_list[1] = temp_list[0]
