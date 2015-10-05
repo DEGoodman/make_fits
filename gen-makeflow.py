@@ -36,14 +36,11 @@ def write_mf(fits_list):
     for f in fits_list:
         # get current SCIENCE datetime
         time = get_datetime(f)
-        # we are arbitrarily choosing n=4
+        # read in DARK tsv file, find nearest absolute datetimes, return n*fits filemnames 
         dark_fits = getDarks(time)
 
+        # TODO:
         # use fitsavg to get 'closest' DARKs
-
-        # read in DARK tsv file, find nearest absolute datetimes, return n*fits filemnames 
- 
-        # avg_dark = fitsavg(f)
         avg_dark = None
 
         ''' append all modified files with '_m_'.
