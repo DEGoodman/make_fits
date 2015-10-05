@@ -22,6 +22,7 @@ def get_files():
 
     # setup DARK tsv
     exfile  = open('dark_metadata.tsv','rb')
+    global tsvdark 
     tsvdark = csv.reader(exfile, delimiter='\t')
 
     write_mf(fits_list)
