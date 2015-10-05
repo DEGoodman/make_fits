@@ -4,5 +4,8 @@
 2. Ensure fitssub is installed and functioning correctly in your working directory.
     (https://pods.iplantcollaborative.org/wiki/display/ACIC2015/Compiling+fitssub)
 
-3. Write your makeflow file!
-    
+3. Generate a makeflow file!
+    Get all fits files
+    loop through SCIENCE fits files
+    for each ^, use [fitsavg] to get 'closest' DARKs
+        Subtract SCIENCE - DARK(avgs) [fitssub]
