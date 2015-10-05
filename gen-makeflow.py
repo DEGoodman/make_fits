@@ -5,8 +5,7 @@ from datetime import *
 import math
 import os
 
-tsvin = None
-tsvdark = None
+dark_list = []
 
 # read list of fits files for input
 def get_files():
@@ -22,8 +21,12 @@ def get_files():
 
     # setup DARK tsv
     exfile  = open('dark_metadata.tsv','rb')
-    global tsvdark 
+    # global tsvdark 
     tsvdark = csv.reader(exfile, delimiter='\t')
+    next(tsvdark, None) # skip header
+    global dark_list
+    for row in tsvdark:
+        dark_list.append((row[0], timeConv(row[1])))
 
     write_mf(fits_list)
     # close csv
@@ -67,7 +70,7 @@ def timeConv(time):
 def getDarks(time):
     temp_list = [(None,datetime.now()) for i in range(4)]
     # compare times
-    for row in tsvdark:
+    for row in dark_list:
         if math.fabs(timeConv(row[1])-time) < math.fabs(temp_list[0]-time):
             temp_list[3] = temp_list[2]
             temp_list[2] = temp_list[1]
