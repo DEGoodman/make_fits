@@ -1,7 +1,7 @@
 ''' NOTE: this file must be executed in the parent directory of the fits files.
 '''
 import csv
-import datetime.datetime as datetime
+from datetime import *
 import math
 import os
 
@@ -15,10 +15,10 @@ def get_files():
     # we will get all files listed in the SCIENCE metadata tsv
     infile  = open('sci_metadata.tsv','rb')
     tsvin = csv.reader(infile, delimiter='\t')
-    # ewwwwwwwwwwww way to remove header
+
+    next(tsvin, None) # skip header
     for row in tsvin:
         fits_list.append((row[0], timeConv(row[1])))
-    fits_list.pop(0)
 
     # setup DARK tsv
     exfile  = open('dark_metadata.tsv','rb')
