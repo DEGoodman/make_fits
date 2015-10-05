@@ -1,0 +1,8 @@
+1. Download and install Makeflow on HPC in bPic directory.
+    (http://ccl.cse.nd.edu/software/tutorials/acic15/makeflow-tutorial.php)
+
+2. Ensure fitssub is installed and functioning correctly in your working directory.
+    (https://pods.iplantcollaborative.org/wiki/display/ACIC2015/Compiling+fitssub)
+
+3. Write your makeflow file!
+    
