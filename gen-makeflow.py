@@ -33,13 +33,12 @@ def get_files():
 def write_mf(fits_list):
     makeflow = open(r'go.makeflow', 'w')
     # loop through SCIENCE fits
-    for f in fits_list:
+    for fit in fits_list:
         # get current SCIENCE datetime
-        time = get_datetime(f)
+        time = get_datetime(fit)
         # read in DARK tsv file, find nearest absolute datetimes, return n*fits filemnames 
         dark_fits = getDarks(time)
 
-        # TODO:
         # use fitsavg to get 'closest' DARKs
         avg_dark = os.system("./fitsavg -i " + darkfits)
 
@@ -51,8 +50,8 @@ def write_mf(fits_list):
                     command
                 \n
         '''
-        makeflow.write("_m_" + f + " : " + f + " " + avg_dark)
-        makeflow.write("\t./fitsub -i " + f + avg_dark)
+        makeflow.write("_m_" + fit + " : " + fit + " " + avg_dark)
+        makeflow.write("\t./fitsub -i " + fit + " " + avg_dark)
         makeflow.write("\n")
         # Subtract SCIENCE - DARK(avgs) (<-- fitssub)
 
