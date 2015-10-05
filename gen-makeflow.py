@@ -10,11 +10,10 @@ def get_files():
     # we will get all files listed in the SCIENCE metadata tsv
     with open('sci_metadata.tsv','rb') as tsvin:
         tsvin = csv.reader(tsvin, delimiter='\t')
-        # blow away a header
-        header = tsvin.readline()
         for row in tsvin:
             fits_list.append(row[0])
-            print("Adding %s" % row[0])
+    # ewwwwwwwwwwww way to remove header
+    fits_list.pop(0)
     # write_mf(fits_list)
 
 # create makeflow file
