@@ -38,7 +38,7 @@ def write_mf(fits_list):
     makeflow = open(r'go.makeflow', 'w')
     # loop through SCIENCE fits
     for fit in fits_list:
-        # read in DARK tsv file, find nearest absolute datetime, return n*fits filenames (currently: 1)
+        # find nearest dark absolute datetime, return n*fits filenames (currently: 1)
         dark_fits = getDarks(fit[1])
 
         ''' TODO: for future version
