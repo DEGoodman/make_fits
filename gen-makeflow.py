@@ -60,7 +60,7 @@ def write_mf(fits_list):
                 \n
         '''
         makeflow.write("_m_" + str(fit[0]) + " : " + str(fit[0]) + " " + avg_dark + " \n")
-        makeflow.write("\t./fitsub -i " + str(fit[0]) + " " + avg_dark + "\n")
+        makeflow.write("\t./fitsub -i " + str(fit[0]) + " -r " + avg_dark + " > " + "_m_" + str(fit[0]) "\n")
         makeflow.write("\n")
 
     makeflow.close()
