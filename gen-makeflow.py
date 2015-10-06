@@ -48,8 +48,9 @@ def write_mf(fits_list):
                 df += str(i[0])
                 df + " "
 
+        # TODO: for future version
         # use fitsavg to get 'closest' DARKs
-        avg_dark = os.system("./fitsavg -i " + df)
+        # avg_dark = os.system("./fitsavg -i " + df)
 
         ''' append all modified files with '_m_'.
             write out lines to makeflow file in correct format
@@ -72,17 +73,25 @@ def timeConv(time):
 
 # get 4 closest dark files
 def getDarks(time):
-    temp_list = [(None,datetime.now()) for i in range(4)]
-    # compare times
+    # TODO: for future release
+    # temp_list = [(None,datetime.now()) for i in range(4)]
+    # # compare times
+    # for row in dark_list:
+    #     if abs(row[1]-time) < abs(temp_list[0][1]-time):
+    #         temp_list[3] = temp_list[2]
+    #         temp_list[2] = temp_list[1]
+    #         temp_list[1] = temp_list[0]
+    #         temp_list[0] = (row[0],row[1])
+    # # how did we do?
+    # print("getDarks -> temp_list: %s" % temp_list)
+    # return temp_list
+
+    # until fitsavg works
+    temp_fname = (None, datetime.now())
     for row in dark_list:
-        if abs(row[1]-time) < abs(temp_list[0][1]-time):
-            temp_list[3] = temp_list[2]
-            temp_list[2] = temp_list[1]
-            temp_list[1] = temp_list[0]
-            temp_list[0] = (row[0],row[1])
-    # how did we do?
-    print("getDarks -> temp_list: %s" % temp_list)
-    return temp_list
+        if abs(row[1]-time) < abs(temp_fname[1]-time):
+            temp_fname = (row[0],row[1])
+    return temp_fname
 
 if __name__ == "__main__":
     get_files()
