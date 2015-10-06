@@ -49,8 +49,9 @@ def write_mf(fits_list):
                 df + " "
 
         # use fitsavg to get 'closest' DARKs
-        avg_dark = os.system("./fitsavg -i " + df)
-
+        # avg_dark = os.system("./fitsavg -i " + df)
+        print("./fitsavg -i " + df)
+        avg_dark = "dark file"
 
         ''' append all modified files with '_m_'.
             write out lines to makeflow file in correct format
@@ -60,8 +61,8 @@ def write_mf(fits_list):
                     command
                 \n
         '''
-        makeflow.write("_m_" + fit[0] + " : " + fit[0] + " " + avg_dark)
-        makeflow.write("\t./fitsub -i " + fit[0] + " " + avg_dark)
+        makeflow.write("_m_" + str(fit[0]) + " : " + str(fit[0]) + " " + avg_dark)
+        makeflow.write("\t./fitsub -i " + str(fit[0]) + " " + avg_dark)
         makeflow.write("\n")
 
     makeflow.close()
