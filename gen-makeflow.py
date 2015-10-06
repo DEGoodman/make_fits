@@ -71,11 +71,11 @@ def getDarks(time):
     temp_list = [(None,datetime.now()) for i in range(4)]
     # compare times
     for row in dark_list:
-        if math.fabs(row[1]-time) < math.fabs(temp_list[0]-time):
+        if abs(row[1]-time) < abs(temp_list[0][1]-time):
             temp_list[3] = temp_list[2]
             temp_list[2] = temp_list[1]
             temp_list[1] = temp_list[0]
-            temp_list[0] = (row[0],timeConv(row[1]))
+            temp_list[0] = (row[0],row[1])
     # how did we do?
     print("getDarks -> temp_list: %s" % temp_list)
     return temp_list
