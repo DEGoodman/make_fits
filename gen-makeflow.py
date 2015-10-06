@@ -43,8 +43,14 @@ def write_mf(fits_list):
         # read in DARK tsv file, find nearest absolute datetimes, return n*fits filemnames 
         dark_fits = getDarks(fit[1])
 
+        df = ""
+        for i in dark_fits:
+                df += str(i[0])
+                df + " "
+
         # use fitsavg to get 'closest' DARKs
-        avg_dark = os.system("./fitsavg -i " + dark_fits)
+        avg_dark = os.system("./fitsavg -i " + df)
+
 
         ''' append all modified files with '_m_'.
             write out lines to makeflow file in correct format
@@ -57,7 +63,6 @@ def write_mf(fits_list):
         makeflow.write("_m_" + fit[0] + " : " + fit[0] + " " + avg_dark)
         makeflow.write("\t./fitsub -i " + fit[0] + " " + avg_dark)
         makeflow.write("\n")
-        # Subtract SCIENCE - DARK(avgs) (<-- fitssub)
 
     makeflow.close()
 
